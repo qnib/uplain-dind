@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: dind
+spec:
+ containers:
+   - name: docker
+     image: qnib/uplain-dind:2019-02-01.1
+     command:
+       - dockerd
+       - "--debug"
+     securityContext:
+       privileged: true
+     volumeMounts:
+       - mountPath: /sys/fs/cgroup
+         name: cgroup-vol
+ volumes:
+  - name: cgroup-vol
+    hostPath:
+      path: /sys/fs/cgroup
+      type: Directory
